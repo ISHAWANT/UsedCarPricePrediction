@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Car Price Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css')}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light static-top">
+        <div class="container-fluid">
+           <a class="navbar-brand" href="https://ineuron.ai"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIkAAAAlCAMAAABBJDpuAAAAVFBMVEX/fgD/iQA7NzIyMjMnNYInNYEnNYInNYEzMzInNYQnNYETJzsnNYIwN1wxMjNoTis4O1YrNm0xOF47PE9DP0dEQEVpTVkAJJ4nNYEOLJHJbiAzMzOmmmHRAAAAFnRSTlOh/vu+986oen9fP2UqEzQkFAIDAAEEILVBJQAAA3FJREFUWMPNmO2WoyAMQG0VBARtdVRs3/89NwkgaF1rd2aOm18tIrnkgwSz7n+R7LcV1ELkeS7E7VySRlyfQXJhTiO55c+liP4cEuH1X8E7gaV+S3Jv2zYZ/Vr+/Sdx2vP6doc/fSPcf/GOpLSFVXFUW8t+giRP47TOd60yk1hbxIhSP0ACKPWrvw7YBIT/lcQY84G3Wk17ugWQfg5UsQJpjflKSLQi7xTWyk0SXTJ4VnB5D1yccxmp4Z+mX5KGNS+SPXVNll0ulyxL0wYmloBB6zL/MpCoAgjAJiUM6w0SboMwPUdRogvNKcNM3smFdRvEcJJkKcflQa+X0pNIfBGW0zKqjyQtw4VLKQlI7ZLgdrRNSZDjMQx2GB4pCkxkCrfGWUTJ0Egan6muCHgJCUwtnCk0mrJ9Q8K5LUqtdSfynkAedhynaRqngVDaXLiJEAzkFkM71IuIlWRYtSQpbXSZDvQ7JPCei9brs+oaABkn74LRIkpFaVxGnzjvIxTYREOoEwn5r01JTDRTcO87Eu3zNUeTPKZpjrIRrNIDCjzALbPk7LJMIokOEQu2K7yKQAKvFDF9pVe0R+LGb7h1MMkw2ijjA/1zhSfSphvEAChXJEhAqwYStIJWXnTpvbdH4hTUwSQ2JRmQpILDLYbB7J41SYiLcNozu5Z3JMo7RxBJahI7WSRByCMkqJt9hySESbVJcvmARJGFExJmdBSl2oM2+T4JLWfgaGFptizlPUm1FydHSdyZ7UnS4ySph2kS0kJrkvr5NJg7dnrJnfxgxPozRPGtkyPNOxtaiDvbIAF9L+5B5zTI2BwlwXmM+U3zReav3o0F8oUEFFZ42McDZYomOUziFmezgWyo251Uc1nyKJol7URCEvIYUEbHYaEGQi9C9egwCdVfHwiaajfjKMUcHcRacCylhWJbJDfq47EEDhYqoIWjHnwDXZPpPiChPQelLU+Cbm4w50FmYgkvFwpiWwCC/Um/SLcNElOC9RVj6qWpCiEMvRUK4zLpdKmPw8rVldy/qxjn60wLrVLWJIPLiZJRr3fsvnOHPvare+lB93tb37T20D82jqOt+zNuXhuNvNhp7X+PpHb3rvV9R5xjE2SpyCN9ffQO+GtWIZr5Xnytz4gTMIRYfys47/uJEXny/aQ/95tSUwmU+uRvSp/IHzQqZYpYrQmxAAAAAElFTkSuQmCC" /></a>
+        </div>
+     </nav>
+    <section>
+        <div class="container-fluid">
+            <div class="container">
+                <form action="/predict" method="post">
+                    <legend>CarPrice Estimation Form</legend>
+                    <div class="mb-3">
+                        <label for="brand">Car Name</label>
+                        <select class="form-control" id="car_name" name="car_name" placeholder="Car Name" required="required">
+                          <option value="" disabled selected>Select Car Name</option>
+                          {% for car in car_list %}
+                          <option value="{{car}}">{{car}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="vechicle_age">Vechicle age</label>
+                        <input type="number" class="form-control" id="vehicle_age" name="vehicle_age" min="0" max="30" placeholder="0 - 30 years" required="required">
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="km_driven">Kilometer driven</label>
+                        <input type="number" class="form-control" id="km_driven" name="km_driven" min="0" max="100000" step="1" placeholder="0 - 1L km" required="required">
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="seller_type">Select Seller type</label>
+                        <select class="form-control" id="seller_type" name="seller_type" placeholder="seller_type" required="required">
+                          <option value="" disabled selected>Seller type</option>
+                          <option>Dealer</option>
+                          <option>Individual</option>
+                          <option>Trustmark Dealer</option>
+                        </select>
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="fuel_type">Select Fuel Type</label>
+                        <select class="form-control" id="fuel_type" name="fuel_type" placeholder="fuel_type" required="required">
+                          <option value="" disabled selected>Fuel Type</option>
+                          <option>Petrol</option>
+                          <option>Diesel</option>
+                          <option>Electric</option>
+                          <option>CNG</option>
+                          <option>LPG</option>
+                        </select>
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="transmission">Select Transmission Type</label>
+                        <select class="form-control" id="transmission" name="transmission" placeholder="transmission" required="required">
+                          <option value="" disabled selected>Transmission Type</option>
+                          <option>Automatic</option>
+                          <option>Manual</option>
+                        </select>
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="mileage">Mileage</label>
+                        <input type="number" class="form-control" id="mileage" name="mileage" min="4" max="30" placeholder="4 - 30 km/litre" required="required">
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="engine">Engine</label>
+                        <input type="number" class="form-control" id="engine" name="engine" min="700" max="7000" placeholder="700cc - 7000cc Engine capacity" required="required">
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="max_power">Max Power</label>
+                        <input type="number" class="form-control" id="max_power" name="max_power" min="38" max="600" placeholder="38bhp - 600bhp Engine power" required="required">
+                      </div>
+        
+                      <div class="mb-3">
+                        <label for="seats">Total Seats count</label>
+                        <input type="number" class="form-control" id="seats" name="seats" min="2" max="9" placeholder="2 - 9 seating" required="required">
+                      </div>
+        
+                        <input class="btn btn-primary" type="submit" value="Predict Used Car Value" required />
+                    </div>
+        
+                </form>
+            </div>
+            <div class="text-center text-black">
+                <h2 class="display-4 fw-bolder">The predicted car price is  {{context}} </h2>
+            </div>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        $(".input").focus(function(){
+            $(this).parent().addClass("focus");
+        }).blur(function(){
+            if($(this).val() === ''){
+                $(this).parent().removeClass("focus");
+            }
+        })
+    </script>
+  </body>
+</html>

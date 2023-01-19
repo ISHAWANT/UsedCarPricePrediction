@@ -1,0 +1,17 @@
+boto3==1.24.87
+category-encoders==2.5.1.post0
+dill==0.3.5.1
+dnspython==2.2.1
+evidently==0.1.58.dev0
+fastapi==0.85.0
+from-root==1.0.2
+ipykernel==6.16.0
+jinja2==3.1.2
+mypy-boto3-s3==1.24.76
+pip-chill==1.0.1
+pymongo==4.2.0
+python-multipart==0.0.5
+uvicorn==0.18.3
+wincertstore==0.2
+xgboost==1.6.2
+-e .
